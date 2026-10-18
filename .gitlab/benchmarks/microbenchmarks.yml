@@ -65,7 +65,10 @@ build-dd-trace-dotnet-microbenchmarks-ami:
 run-benchmarks:
   stage: benchmarks
   tags: ["arch:amd64"]
-  timeout: 2h
+  # Generous timeout: BenchmarkDotNet's adaptive iteration/warmup/launch
+  # defaults make the suite significantly longer than the previous fixed
+  # 200 ms x 10 iteration configuration.
+  timeout: 4h
   image: registry.ddbuild.io/images/benchmarking-platform-tools-ubuntu:219fc97b
   id_tokens:
     DDOCTOSTS_ID_TOKEN:
